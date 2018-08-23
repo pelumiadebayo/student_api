@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
             console.log(err)
         } else {
             res.render('show_students', {
-                title: 'Student',
+                title: 'Students',
                 students: student
             });
         }
@@ -58,24 +58,37 @@ app.get('/add', (req, res) => {
 
 //submit POST form from add_article.pug
 app.post('/add', (req, res) => {
-    const name = req.body.name;
-    const faculty = req.body.faculty;
-    const department = req.body.department;
-    const level = req.body.department;
+    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('department', 'Department is required').notEmpty();
+    req.checkBody('faculty', 'Faculty is required').notEmpty();
+    req.checkBody('level', 'Level is required').isNumeric();
 
-    let student = new Student();
-    student.name = name;
-    student.faculty = faculty;
-    student.department = department;
-    student.level = level;
+    let errors = req.validationErrors();
+    if (errors) {
+        res.render('add_student', {
+            title: 'Add Article',
+            errors: errors
+        })
+    } else {
+        const name = req.body.name;
+        const faculty = req.body.faculty;
+        const department = req.body.department;
+        const level = req.body.level;
 
-    student.save((err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.redirect('/');
-        }
-    })
+        let student = new Student();
+        student.name = name;
+        student.faculty = faculty;
+        student.department = department;
+        student.level = level;
+
+        student.save((err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect('/');
+            }
+        })
+    }
 });
 
 //setting up port

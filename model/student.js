@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ObjectId = mongoose.SchemaTypes.ObjectId
+// const ObjectId = mongoose.SchemaTypes.ObjectId
 const studentSchema = new Schema({
     name: {
         type: String,
@@ -15,7 +15,7 @@ const studentSchema = new Schema({
         require: true
     },
     level: {
-        type: Number,
+        type: String,
         require: true
     }
 });

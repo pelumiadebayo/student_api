@@ -19,4 +19,8 @@ html
                     li.mr-2
                         a(href='/add') Add Students
 .container.mt-5
-        h1.mt-5= student.name
+            h1.mt-5= title
+            ul.list-group
+                each student, i in students
+                    li.list-group-item
+                        p= student.name +'  --   '+ student.department +'  --   '+ student.faculty +' -- '+ student.level
